@@ -20,16 +20,16 @@ public class Main {
         //由读出工具类得到路径而读出的抄袭文档
 
         Scanner in = new Scanner(System.in);
-        System.out.println("请输入原文路径:");
-        originalPath =  in.nextLine();
+
+        originalPath =  in.next();
         originalArray = txtArray.txtToArray(originalPath);
         //用读出工具类读出文档，并且返回数组
-        System.out.println("请输入查重论文路径:");
-        addPath = in.nextLine();
+
+        addPath = in.next();
         //用读出工具类读出文档
         addArray = txtArray.txtToArray(addPath);
-        System.out.println("请输入结果储存路径:");
-        ansPath = in.nextLine();
+
+        ansPath = in.next();
         Papercheck.Papercheck(originalArray, addArray, ansPath);
         //用Papercheck类分析比较出文档的查重率并且录入文档中
 
