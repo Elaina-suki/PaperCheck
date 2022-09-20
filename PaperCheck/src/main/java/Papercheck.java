@@ -1,3 +1,5 @@
+import com.sun.deploy.util.StringUtils;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -5,38 +7,56 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Papercheck {
+
+
+//用来进行句子对比的关键类Papercheck
+
+
+
+public class Papercheck
+{
     public static void Papercheck(String[] originalArray, String[] addArray, String ansPath) {
+    //读取由上一个接口传下来的两个字符数组，一个为原文一个为抄袭
         double similarityPercentage = 0;
         double sentencePercentage;
         double wordNum = 0;
-        for (String doc1 : originalArray
-        ) {
+        //运用余弦相似度算法来比较两数组的相似度
+        for (String doc1 : originalArray)
+        {
             sentencePercentage = 0;
             if (doc1 == null) break;
             wordNum += doc1.length();
-            for (String doc2 : addArray
-            ) {
-                if (doc2 == null) break;
+            for (String doc2 : addArray)
+            {
+                if (doc2 == null)
+                    break;
                 Map<Character, int[]> algMap = new HashMap<Character, int[]>();
-                for (int i = 0; i < doc1.length(); i++) {
+                for (int i = 0; i < doc1.length(); i++)
+                {
                     char d1 = doc1.charAt(i);
                     int[] fq = algMap.get(d1);
-                    if (fq != null && fq.length == 2) {
+                    if (fq != null && fq.length == 2)
+                    {
                         fq[0]++;
-                    } else {
+                    }
+                    else
+                    {
                         fq = new int[2];
                         fq[0] = 1;
                         fq[1] = 0;
                         algMap.put(d1, fq);
                     }
                 }
-                for (int i = 0; i < doc2.length(); i++) {
+                for (int i = 0; i < doc2.length(); i++)
+                {
                     char d2 = doc2.charAt(i);
                     int[] fq = algMap.get(d2);
-                    if (fq != null && fq.length == 2) {
+                    if (fq != null && fq.length == 2)
+                    {
                         fq[1]++;
-                    } else {
+                    }
+                    else
+                    {
                         fq = new int[2];
                         fq[0] = 0;
                         fq[1] = 1;
@@ -53,6 +73,7 @@ public class Papercheck {
                     sqdoc2 += c[1] * c[1];
                 }
                 double similarPercentage = denuminator / Math.sqrt(sqdoc1 * sqdoc2);
+                //定义相似度
                 if (similarPercentage > sentencePercentage)
                     sentencePercentage = similarPercentage;
             }
